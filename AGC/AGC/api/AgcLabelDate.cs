@@ -8,7 +8,7 @@ using AGC.entity;
 
 namespace AGC.api
 {
-    public class AgcLabelDate: AgcBase, IAgc
+    public class AgcLabelDate: AgcBase
     {
         public AgcLabelDate(int index, String label):base(index)
         {
@@ -29,11 +29,6 @@ namespace AGC.api
         {
             get { return _mLabel; }
             set { _mLabel = value; }
-        }
-
-        protected override void init()
-        {
-            mIAgc = this;
         }
 
         public override object getValue()
@@ -59,11 +54,8 @@ namespace AGC.api
             
         }
 
-        #region IAgc ≥…‘±
-
-        List<AgcControl> IAgc.generate()
+        protected override void setControl()
         {
-            List<AgcControl> list = new List<AgcControl>();
             AgcControl agcLabel = new AgcControl();
             agcLabel.Index = 1;
             this.MLabel = new Label();
@@ -83,11 +75,8 @@ namespace AGC.api
             this.MDateTimePicker.TabIndex = this.Index;
             agcDtp.MControl = this.MDateTimePicker;
 
-            list.Add(agcLabel);
-            list.Add(agcDtp);
-            return list;
+            this.MAgcCtlList.Add(agcLabel);
+            this.MAgcCtlList.Add(agcDtp);
         }
-
-        #endregion
     }
 }

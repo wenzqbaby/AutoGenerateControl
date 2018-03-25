@@ -8,11 +8,12 @@ using AGC.entity;
 
 namespace AGC.api
 {
-    public class AgcCheckBoxList:AgcBase, IAgc
+    public class AgcCheckBoxList:AgcBase, IAgcAttach
     {
         private AgcCenter<AgcCheckbox> mAgcCenter;
         private List<AgcCheckbox> agcCheckBoxList = new List<AgcCheckbox>();
         private Dictionary<String, AgcCheckbox> checkBoxDic = new Dictionary<String, AgcCheckbox>();
+        protected List<AgcBase> mAttachList = new List<AgcBase>();
         private int mPanelLength = 0;
         private String[] mCheckList;
         private Char mSeparate = '=';
@@ -25,11 +26,6 @@ namespace AGC.api
             this.mCheckList = checkList;
             this.NewRow = newRow;
             this.mPanelLength = panelLength;
-        }
-
-        protected override void init()
-        {
-            mIAgc = this;
         }
 
         public override object getValue()
@@ -55,11 +51,8 @@ namespace AGC.api
             }
         }
 
-        #region IAgc 成员
-
-        List<AgcControl> IAgc.generate()
+        protected override void setControl()
         {
-            List<AgcControl> list = new List<AgcControl>();
             AgcControl agcLabel = new AgcControl();
             agcLabel.Index = 1;
             this.MLabel = new Label();
@@ -80,12 +73,9 @@ namespace AGC.api
             this.MPanel.TabIndex = this.Index;
             agcPanel.MControl = this.MPanel;
 
-            list.Add(agcLabel);
-            list.Add(agcPanel);
-            return list;
+            this.MAgcCtlList.Add(agcLabel);
+            this.MAgcCtlList.Add(agcPanel);
         }
-
-        #endregion
 
         public override bool afterAdd()
         {
@@ -103,6 +93,7 @@ namespace AGC.api
                 agcCheckBoxList.Add(agcCb);
                 checkBoxDic.Add(agcCb.Tag.ToString(), agcCb);
             }
+            list.AddRange(mAttachList);
             AgcSetting setting = new AgcSetting(true);
             setting.MarginButtom = 0;
             setting.SpacingY = 0;
@@ -137,5 +128,20 @@ namespace AGC.api
             get { return _mPanel; }
             set { _mPanel = value; }
         }
+
+
+        #region IAgcAttach 成员
+
+        List<AgcBase> IAgcAttach.getAttachList()
+        {
+            return mAttachList;
+        }
+
+        void IAgcAttach.attach(AgcBase agcBase)
+        {
+            mAttachList.Add(agcBase);
+        }
+
+        #endregion
     }
 }

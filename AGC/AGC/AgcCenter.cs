@@ -4,6 +4,7 @@ using System.Text;
 using System.Reflection;
 using AGC.attributes;
 using System.Windows.Forms;
+using AGC.interfaces;
 
 namespace AGC
 {
@@ -35,6 +36,7 @@ namespace AGC
             mType = typeof(T);
             TAG = mType.Name;
             PropertyInfo[] mPropertyInfo = typeof(T).GetProperties();
+            List<AgcBase> attachList = new List<AgcBase>();
             foreach (PropertyInfo pi in mPropertyInfo)
             {
                 try
@@ -43,7 +45,14 @@ namespace AGC
                     if (attr != null)
                     {
                         AgcBase ab = (attr as AgcBase);
-                        baseList.Add(ab);
+                        if (ab.isAttach)
+                        {
+                            attachList.Add(ab);
+                        }
+                        else 
+                        {
+                            baseList.Add(ab);
+                        }
                         propDic.Add(pi.Name, ab);
                     }
                 }
@@ -52,6 +61,22 @@ namespace AGC
                     throw new Exception("AGC获取控件配置出错：" + ex.Message);
                 }
             }
+
+            if (attachList.Count > 0)
+            {
+                foreach (AgcBase var in attachList)
+                {
+                    try
+                    {
+                        (getControl(var.attachProp) as IAgcAttach).attach(var);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception( String.Format("{0}: {1} 附加的属性名对应的控件未实现接口AGC.interfaces.IAgcAttach" + e.Message,TAG, var.Title));
+                    }
+                }
+            }
+
             mContainer = container;
             mGanerator = new AgcGanerator(mContainer);
         }
@@ -59,11 +84,11 @@ namespace AGC
         public AgcCenter(Control container, AgcSetting agcSetting, List<AgcBase> slots)
         {
             mContainer = container;
-            baseList = slots;
-            foreach (AgcBase ab in baseList)
+            foreach (AgcBase ab in slots)
             {
                 propDic.Add(ab.Tag.ToString(), ab);
             }
+            baseList.AddRange(slots);
             mGanerator = new AgcGanerator(mContainer, agcSetting);
             this.generate();
         }
@@ -93,6 +118,23 @@ namespace AGC
         public void generate()
         {
             mGanerator.generate(baseList);
+        }
+
+        /// <summary>
+        /// 根据属性名获取控件
+        /// </summary>
+        /// <param name="objProp">属性名</param>
+        /// <returns></returns>
+        public AgcBase getControl(String objProp)
+        {
+            try
+            {
+                return propDic[objProp];
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         /// <summary>

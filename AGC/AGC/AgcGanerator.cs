@@ -38,13 +38,6 @@ namespace AGC
             init();
         }
 
-        public AgcGanerator(Control container, AgcSetting agcSetting, List<AgcBase> slots)
-        {
-            mContainer = container;
-            mSetting = agcSetting;
-            init();
-        }
-
         private void init()
         {
             X = mSetting.MarginLeft;
@@ -57,7 +50,7 @@ namespace AGC
             int betterY = 0;
             foreach (AgcBase agcBase in agcBaseList)
             {
-                agcBase.afterInit();
+                agcBase.init();
                 agcBase.beforeGenerate();
                 agcBase.generate();
                 agcBase.afterGenerate();
@@ -73,7 +66,7 @@ namespace AGC
                 int tempX = X + agcBase.MarginLeft;
                 int tempY = Y + agcBase.MarginTop;
                 
-                foreach (AgcControl agcCtl in agcBase.getCtls())
+                foreach (AgcControl agcCtl in agcBase.MAgcCtlList)
                 {
                     int cX = tempX + agcCtl.MarginLeft;
                     agcCtl.MControl.Location = new System.Drawing.Point(cX, tempY + agcCtl.MarginTop);

@@ -14,9 +14,16 @@ namespace AGC.attributes
     /// </summary>
     public abstract class AgcBase : Attribute
     {
-        protected IAgc mIAgc;
         protected String mTAG;
-        protected List<AgcControl> mAgcCtlList;
+        /// <summary>
+        /// 若该属性为true，则生成的控件会添加到其他容器上
+        /// </summary>
+        public bool isAttach = false;
+
+        /// <summary>
+        /// isAttach为true才生效，要附加的属性名，该属性对应的控件必须为AGC.interfaces.IAgcAttach
+        /// </summary>
+        public String attachProp;
 
         public AgcBase(int index)
         {
@@ -24,35 +31,25 @@ namespace AGC.attributes
             mTAG = this.GetType().Name;
         }
 
-        /// <summary>
-        /// 初始化mIAgc接口
-        /// </summary>
-        protected abstract void init();
-
         #region 生命周期
-        
-        public void afterInit()
-        {
-            this.init();
-            if (mIAgc == null)
-            {
-                throw new Exception(String.Format("生成错误：{0} 的IAgc接口未被初始化", mTAG));
-            }
-        }
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public virtual void init() { }
+        protected virtual void beforeSetControl() { }
+        protected abstract void setControl();
+        protected virtual void afterSetControl() { }
 
         public virtual void beforeGenerate() { }
 
         public List<AgcControl> generate()
         {
-            mAgcCtlList = mIAgc.generate();
-            if (mAgcCtlList == null || mAgcCtlList.Count <1)
-            {
-                mAgcCtlList = new List<AgcControl>();
-                return mAgcCtlList;
-            }
-            mAgcCtlList.Sort(delegate(AgcControl ac1, AgcControl ac2) { return ac1.Index.CompareTo(ac2.Index); });
+            this.beforeSetControl();
+            this.setControl();
+            this.afterSetControl();
+            MAgcCtlList.Sort(delegate(AgcControl ac1, AgcControl ac2) { return ac1.Index.CompareTo(ac2.Index); });
             calcWidthAndHeight();
-            return getCtls();
+            return MAgcCtlList;
         }
 
         public virtual void afterGenerate() { }
@@ -73,7 +70,7 @@ namespace AGC.attributes
             this.TotalWidth = 0;
             this.TotalHeight = 0;
 
-            foreach (AgcControl aCtl in mAgcCtlList)
+            foreach (AgcControl aCtl in MAgcCtlList)
             {
                 this.TotalWidth += (aCtl.MarginLeft + aCtl.MControl.Width + aCtl.MarginRight);
                 int h = aCtl.MarginTop + aCtl.MControl.Height + aCtl.MarginButtom;
@@ -94,13 +91,15 @@ namespace AGC.attributes
         public abstract void setValue(Object obj);
 
         public virtual void Enable(bool enable) {}
+
+        private List<AgcControl> _mAgcCtlList = new List<AgcControl>();
         /// <summary>
-        /// 获取控件集合
+        /// 控件集合
         /// </summary>
-        /// <returns></returns>
-        public List<AgcControl> getCtls()
+        public List<AgcControl> MAgcCtlList
         {
-            return mAgcCtlList;
+            get { return _mAgcCtlList; }
+            set { _mAgcCtlList = value; }
         }
 
         private int _totalWidth;

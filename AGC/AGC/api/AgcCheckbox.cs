@@ -24,11 +24,6 @@ namespace AGC.api
             this.Tag = value;
         }
 
-        protected override void init()
-        {
-            mIAgc = this;
-        }
-
         public override object getValue()
         {
             if (this.MCheckBox.Checked)
@@ -48,11 +43,8 @@ namespace AGC.api
             this.MCheckBox.Checked = Convert.ToBoolean(obj);
         }
 
-        #region IAgc ≥…‘±
-
-        List<AgcControl> IAgc.generate()
+        protected override void setControl()
         {
-            List<AgcControl> list = new List<AgcControl>();
             AgcControl agcCheckBox = new AgcControl();
             this.MCheckBox = new CheckBox();
             this.MCheckBox.AutoSize = true;
@@ -62,10 +54,7 @@ namespace AGC.api
             this.MCheckBox.Width = this.MCheckBox.PreferredSize.Width;
             agcCheckBox.MControl = this.MCheckBox;
 
-            list.Add(agcCheckBox);
-            return list;
+            this.MAgcCtlList.Add(agcCheckBox);
         }
-
-        #endregion
     }
 }

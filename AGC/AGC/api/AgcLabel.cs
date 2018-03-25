@@ -9,18 +9,13 @@ using System.Drawing;
 
 namespace AGC.api
 {
-    public class AgcLabel: AgcBase, IAgc
+    public class AgcLabel: AgcBase
     {
         public AgcLabel(int index, String label, int valueWidth, bool newRow):base(index)
         {
             this.Title = label;
             this.MarginRight = valueWidth;
             this.NewRow = newRow;
-        }
-
-        protected override void init()
-        {
-            mIAgc = this;
         }
 
         public override object getValue()
@@ -34,11 +29,8 @@ namespace AGC.api
             this.MLabelValue.Width = this.MLabelValue.PreferredWidth;
         }
 
-        #region IAgc ≥…‘±
-
-        List<AgcControl> IAgc.generate()
+        protected override void setControl()
         {
-            List<AgcControl> list = new List<AgcControl>();
             AgcControl agcLabelTitle = new AgcControl();
             agcLabelTitle.Index = 1;
             this.MLabelTitle = new Label();
@@ -58,12 +50,10 @@ namespace AGC.api
             this.MLabelValue.Width = this.MLabelValue.PreferredWidth;
             agcLabelValue.MControl = this.MLabelValue;
 
-            list.Add(agcLabelTitle);
-            list.Add(agcLabelValue);
-            return list;
+            this.MAgcCtlList.Add(agcLabelTitle);
+            this.MAgcCtlList.Add(agcLabelValue);
         }
 
-        #endregion
 
         private Label _mLabelTitle;
 

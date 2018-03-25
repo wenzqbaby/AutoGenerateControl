@@ -9,7 +9,7 @@ using AGC.utils;
 
 namespace AGC.api
 {
-    public class AgcLabelText : AgcBase, IAgc
+    public class AgcLabelText : AgcBase
     {
         private int textLength;
 
@@ -37,11 +37,6 @@ namespace AGC.api
             this.NewRow = newRow;
         }
 
-        protected override void init()
-        {
-            mIAgc = this;
-        }
-
         public override object getValue()
         {
             return _textBox.Text;
@@ -52,11 +47,8 @@ namespace AGC.api
             _textBox.Text = obj.ToString();
         }
 
-        #region IAgc ≥…‘±
-
-        List<AgcControl> IAgc.generate()
+        protected override void setControl()
         {
-            List<AgcControl> list = new List<AgcControl>();
             AgcControl agcLabel = new AgcControl();
             agcLabel.Index = 1;
             this.MLabel = new Label();
@@ -77,11 +69,8 @@ namespace AGC.api
             this.MTextBox.TabIndex = this.Index;
             agcText.MControl = this.MTextBox;
 
-            list.Add(agcLabel);
-            list.Add(agcText);
-            return list;
+            this.MAgcCtlList.Add(agcLabel);
+            this.MAgcCtlList.Add(agcText);
         }
-
-        #endregion
     }
 }
