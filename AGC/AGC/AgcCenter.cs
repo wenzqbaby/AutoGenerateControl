@@ -108,7 +108,7 @@ namespace AGC
             foreach (KeyValuePair<String, AgcBase> kv in propDic)
             {
                 Object v = this.getObj(t, kv.Key);
-                kv.Value.setValue(v);
+                kv.Value.set(v);
             }
         }
 

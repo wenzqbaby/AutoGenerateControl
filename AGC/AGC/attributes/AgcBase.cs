@@ -85,10 +85,23 @@ namespace AGC.attributes
         public abstract Object getValue();
 
         /// <summary>
+        /// 设置值到控件中
+        /// </summary>
+        /// <param name="obj"></param>
+        public void set(Object obj)
+        {
+            if (obj == null)
+            {
+                return;
+            }
+            this.setValue(obj);
+        }
+
+        /// <summary>
         /// 设置值
         /// </summary>
         /// <param name="obj"></param>
-        public abstract void setValue(Object obj);
+        protected abstract void setValue(Object obj);
 
         public virtual void Enable(bool enable) {}
 

@@ -39,12 +39,12 @@ namespace AGC.api
 
         public override object getValue()
         {
-            return _textBox.Text;
+            return MTextBox.Text;
         }
 
-        public override void setValue(object obj)
+        protected override void setValue(object obj)
         {
-            _textBox.Text = obj.ToString();
+            MTextBox.Text = obj.ToString();
         }
 
         protected override void setControl()

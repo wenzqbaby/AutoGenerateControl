@@ -38,7 +38,7 @@ namespace AGC.api
             return this.MCheckBox.Checked;
         }
 
-        public override void setValue(object obj)
+        protected override void setValue(object obj)
         {
             this.MCheckBox.Checked = Convert.ToBoolean(obj);
         }

@@ -38,7 +38,7 @@ namespace AGC.api
             return value.Length > 2? value.Substring(0, value.Length-1): value;
         }
 
-        public override void setValue(object obj)
+        protected override void setValue(object obj)
         {
             String[] values = obj.ToString().Split(mValueSeparate);
             foreach (String v in values)
@@ -46,7 +46,7 @@ namespace AGC.api
                 AgcCheckbox acb = this.getCheckBoxByTag(v);
                 if (acb != null)
                 {
-                    acb.setValue(true);
+                    acb.set(true);
                 }
             }
         }

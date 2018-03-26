@@ -23,8 +23,12 @@ namespace AGC.api
             return this.MLabelValue.Text;
         }
 
-        public override void setValue(object obj)
+        protected override void setValue(object obj)
         {
+            if (obj == null)
+            {
+                return;
+            }
             this.MLabelValue.Text = obj.ToString();
             this.MLabelValue.Width = this.MLabelValue.PreferredWidth;
         }

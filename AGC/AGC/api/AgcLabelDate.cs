@@ -40,7 +40,7 @@ namespace AGC.api
         /// 参数格式为yyyy-MM-dd HH:mm:ss的字符串
         /// </summary>
         /// <param name="obj"></param>
-        public override void setValue(object obj)
+        protected override void setValue(object obj)
         {
             try
             {

@@ -42,10 +42,12 @@
     <Compile Include="api\AgcCheckText.cs" />
     <Compile Include="api\AgcLabel.cs" />
     <Compile Include="api\AgcLabelDate.cs" />
+    <Compile Include="api\AgcLabelCombo.cs" />
     <Compile Include="api\AgcLabelText.cs" />
     <Compile Include="attributes\AgcBase.cs" />
     <Compile Include="attributes\AgcSetting.cs" />
     <Compile Include="entity\AgcControl.cs" />
+    <Compile Include="entity\AgcKeyValue.cs" />
     <Compile Include="interfaces\IAgc.cs" />
     <Compile Include="interfaces\IAgcAttach.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -8,6 +8,11 @@ using AGC.entity;
 
 namespace AGC.api
 {
+    /// <summary>
+    /// 选中后才能填写文本，必须附加到其他控件上使用
+    /// @author wenzq
+    /// @date   2018.3.25
+    /// </summary>
     public class AgcCheckText: AgcBase
     {
         private int mTextLength;
@@ -33,12 +38,8 @@ namespace AGC.api
             return String.Empty;
         }
 
-        public override void setValue(object obj)
+        protected override void setValue(object obj)
         {
-            if (obj == null || String.IsNullOrEmpty(obj.ToString()))
-            {
-                return;
-            }
             this.MCheckBox.Checked = true;
             this.MTextBox.Text = obj.ToString();
         }
