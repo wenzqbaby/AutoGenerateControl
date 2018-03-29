@@ -1,5 +1,6 @@
 # AutoGenerateControl
 C# Winform自动生成控件工具
+
 #自动生成控件：
 1、首先对需要自动创建控件的对象的属性配置，添加`AGC.attributes.AgcBase`特征(已封装部分在AGC.api包下，若不满足可以自己写AgcBase的子类)，例如：
 ```csharp
@@ -66,6 +67,7 @@ AGC.AgcCenter<User> mCenter = new AGC.AgcCenter<User>(this.panel);
 ```csharp
 AGC.AgcCenter<User> mCenter = new AGC.AgcCenter<User>(this.panel, slot);
 ```
+
 ###AGC.AgcCenter<T>方法：
 getValue()：可以获取自动生成控件对应值的对象
 setValue(T t) : 可以把对象的值显示到自动生成的控件上
