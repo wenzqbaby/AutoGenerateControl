@@ -1,7 +1,7 @@
 # AutoGenerateControl
 C# Winform自动生成控件工具
 
-#自动生成控件：
+# 自动生成控件：
 1、首先对需要自动创建控件的对象的属性配置，添加`AGC.attributes.AgcBase`特征(已封装部分在AGC.api包下，若不满足可以自己写AgcBase的子类)，例如：
 ```csharp
 class User
@@ -68,15 +68,19 @@ AGC.AgcCenter<User> mCenter = new AGC.AgcCenter<User>(this.panel);
 AGC.AgcCenter<User> mCenter = new AGC.AgcCenter<User>(this.panel, slot);
 ```
 
-###AGC.AgcCenter<T>方法：
+### AGC.AgcCenter<T>方法：
+    
 getValue()：可以获取自动生成控件对应值的对象
+    
 setValue(T t) : 可以把对象的值显示到自动生成的控件上
 
-#校验器
-1、首先对需要校验的对象的属性配置，添加`AGC.validate.ValidateBase`特征(已封装部分在AGC.validate包下，若不满足可以自己写ValidateBase的子类)，例如：
+# 校验器
+1、首先对需要校验的对象的属性配置，添加`AGC.validate.ValidateBase`特征(已封装部分在AGC.validate包下，若不满足可以自己写ValidateBase的子类)
+
 2、实例化校验器：
 `AGC.Validator<User> mValidator = new AGC.Validator<User>();`
+
 3、调用校验器的`validate(T t)`方法可校验传入对象是否满足校验，返回`AGC.entity.Validatation`对象
 
-#AgcCenter添加校验：
+# AgcCenter添加校验：
 AgcCenter构造方法中参数allowValidate为true的话，将开启校验功能，`AgcCenter.validate()`可直接校验控件，并且对ValidateBase中AddEvent为true的属性，对AgcBase控件添加校验事件，但是AgcBase控件必须实现 `AGC.interfaces.IValidate`接口，即通过配置，可直接为控件添加校验事件
