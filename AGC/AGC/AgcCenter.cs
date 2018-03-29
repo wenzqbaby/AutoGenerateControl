@@ -37,6 +37,7 @@ namespace AGC
         public AgcCenter(Control container)
         {
             this.init(container);
+            this.generate();
         }
 
         public AgcCenter(Control container, bool allowValidate)
@@ -47,6 +48,24 @@ namespace AGC
                 mValidator = new Validator<T>();
                 mValidator.init(this.propDic);
             }
+            this.generate();
+        }
+
+        public AgcCenter(Control container, List<AgcBase> slots)
+        {
+            this.init(container);
+            this.generate(slots);
+        }
+
+        public AgcCenter(Control container, List<AgcBase> slots, bool allowValidate)
+        {
+            this.init(container);
+            if (allowValidate)
+            {
+                mValidator = new Validator<T>();
+                mValidator.init(this.propDic);
+            }
+            this.generate(slots);
         }
 
         private void init(Control container)
@@ -97,7 +116,7 @@ namespace AGC
 
             mContainer = container;
             mGanerator = new AgcGanerator(mContainer);
-            this.generate();
+            
         }
 
         public AgcCenter(Control container, AgcSetting agcSetting, List<AgcBase> slots)
