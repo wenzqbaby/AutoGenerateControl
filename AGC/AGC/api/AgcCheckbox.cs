@@ -8,7 +8,7 @@ using AGC.entity;
 
 namespace AGC.api
 {
-    public class AgcCheckbox:AgcBase, IAgc
+    public class AgcCheckbox:AgcBase
     {
         private CheckBox _mCheckBox;
 

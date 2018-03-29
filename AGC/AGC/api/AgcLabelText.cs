@@ -9,7 +9,7 @@ using AGC.utils;
 
 namespace AGC.api
 {
-    public class AgcLabelText : AgcBase
+    public class AgcLabelText : AgcBase, IValidate
     {
         private int textLength;
 
@@ -72,5 +72,24 @@ namespace AGC.api
             this.MAgcCtlList.Add(agcLabel);
             this.MAgcCtlList.Add(agcText);
         }
+
+        #region IValidate ≥…‘±
+
+        public Control getValidateControl()
+        {
+            return this.MTextBox;
+        }
+
+        public void validateSuccess()
+        {
+            
+        }
+
+        public void validateFail(string failMsg)
+        {
+            
+        }
+
+        #endregion
     }
 }

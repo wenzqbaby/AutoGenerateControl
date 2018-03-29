@@ -9,6 +9,7 @@ namespace AGC.attributes
     /// @author wenzq
     /// @date   2018.3.23
     /// </summary>
+    [AttributeUsage(AttributeTargets.Class, Inherited = true)]
     public class AgcSetting: Attribute
     {
         public AgcSetting() { }

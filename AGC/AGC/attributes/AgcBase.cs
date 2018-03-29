@@ -12,6 +12,7 @@ namespace AGC.attributes
     /// @author wenzq
     /// @date   2018.3.23
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property, Inherited = true)]
     public abstract class AgcBase : Attribute
     {
         protected String mTAG;

@@ -8,11 +8,24 @@ using AGC.entity;
 
 namespace AGC.api
 {
-    public class AgcLabelDate: AgcBase
+    public class AgcLabelDate: AgcBase, IAgcAttach
     {
-        public AgcLabelDate(int index, String label):base(index)
+        public AgcLabelDate(int index, String label, bool newRow):base(index)
         {
             this.Title = label;
+            this.NewRow = NewRow;
+        }
+
+        public AgcLabelDate(int index, bool attach, String prop, String label, bool newRow)
+            : base(index)
+        {
+            this.Index = index;
+            this.isAttach = attach;
+            this.attachProp = prop;
+            this.Title = label;
+            this.NewRow = newRow;
+
+            this.addControl(2, 3);
         }
 
         private DateTimePicker _mDateTimePicker;
@@ -56,8 +69,13 @@ namespace AGC.api
 
         protected override void setControl()
         {
+            addControl(1, 2);
+        }
+
+        private void addControl(int labelIndex, int dtpIndex)
+        {
             AgcControl agcLabel = new AgcControl();
-            agcLabel.Index = 1;
+            agcLabel.Index = labelIndex;
             this.MLabel = new Label();
             this.MLabel.AutoSize = true;
             this.MLabel.Name = this.generateName();
@@ -66,9 +84,10 @@ namespace AGC.api
             agcLabel.MControl = this.MLabel;
 
             AgcControl agcDtp = new AgcControl();
-            agcDtp.Index = 2;
+            agcDtp.Index = dtpIndex;
             agcDtp.MarginLeft = 2;
             agcDtp.MarginTop = -4;
+            agcDtp.MarginRight = 2;
             this.MDateTimePicker = new DateTimePicker();
             this.MDateTimePicker.Size = new System.Drawing.Size(200, 21);
             this.MDateTimePicker.Name = this.generateName();
@@ -78,5 +97,25 @@ namespace AGC.api
             this.MAgcCtlList.Add(agcLabel);
             this.MAgcCtlList.Add(agcDtp);
         }
+
+        #region IAgcAttach ≥…‘±
+
+        private List<AgcBase> attachList = new List<AgcBase>();
+
+        public List<AgcBase> getAttachList()
+        {
+            return attachList;
+        }
+
+        public void attach(AgcBase agcBase)
+        {
+            attachList.Add(agcBase);
+            foreach (AgcControl ac in agcBase.MAgcCtlList)
+            {
+                this.MAgcCtlList.Add(ac);
+            }
+        }
+
+        #endregion
     }
 }

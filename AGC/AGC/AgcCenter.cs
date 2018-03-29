@@ -5,11 +5,12 @@ using System.Reflection;
 using AGC.attributes;
 using System.Windows.Forms;
 using AGC.interfaces;
+using AGC.entity;
 
 namespace AGC
 {
     /// <summary>
-    /// AGC核心
+    /// AGC核心, T的属性须为字符串
     /// @author wenzq
     /// @date   2018.3.23
     /// </summary>
@@ -31,7 +32,24 @@ namespace AGC
         private AgcGanerator mGanerator;
         private Type mType;
 
+        private Validator<T> mValidator;
+
         public AgcCenter(Control container)
+        {
+            this.init(container);
+        }
+
+        public AgcCenter(Control container, bool allowValidate)
+        {
+            this.init(container);
+            if (allowValidate)
+            {
+                mValidator = new Validator<T>();
+                mValidator.init(this.propDic);
+            }
+        }
+
+        private void init(Control container)
         {
             mType = typeof(T);
             TAG = mType.Name;
@@ -49,7 +67,7 @@ namespace AGC
                         {
                             attachList.Add(ab);
                         }
-                        else 
+                        else
                         {
                             baseList.Add(ab);
                         }
@@ -58,7 +76,7 @@ namespace AGC
                 }
                 catch (System.Exception ex)
                 {
-                    throw new Exception("AGC获取控件配置出错：" + ex.Message);
+                    throw new Exception(String.Format("{0} 获取控件配置出错：", mType) + ex.Message);
                 }
             }
 
@@ -72,13 +90,14 @@ namespace AGC
                     }
                     catch (Exception e)
                     {
-                        throw new Exception( String.Format("{0}: {1} 附加的属性名对应的控件未实现接口AGC.interfaces.IAgcAttach" + e.Message,TAG, var.Title));
+                        throw new Exception(String.Format("{0}: {1} 附加的属性名对应的控件未实现接口AGC.interfaces.IAgcAttach" + e.Message, TAG, var.Title));
                     }
                 }
             }
 
             mContainer = container;
             mGanerator = new AgcGanerator(mContainer);
+            this.generate();
         }
 
         public AgcCenter(Control container, AgcSetting agcSetting, List<AgcBase> slots)
@@ -103,6 +122,21 @@ namespace AGC
             return t;
         }
 
+        public T getValueBySetNull()
+        {
+            T t = Activator.CreateInstance<T>();
+            foreach (KeyValuePair<String, AgcBase> kv in propDic)
+            {
+                Object value = kv.Value.getValue();
+                if (value == null || String.IsNullOrEmpty(value.ToString()))
+                {
+                    value = "NULL";
+                }
+                this.setObj(t, kv.Key, value);
+            }
+            return t;
+        }
+
         public void setValue(T t)
         {
             foreach (KeyValuePair<String, AgcBase> kv in propDic)
@@ -110,6 +144,16 @@ namespace AGC
                 Object v = this.getObj(t, kv.Key);
                 kv.Value.set(v);
             }
+        }
+
+        public Validatation validate()
+        {
+            if (mValidator == null)
+            {
+                throw new Exception(String.Format("{} 未开启校验", TAG));
+            }
+
+            return mValidator.validate(this.getValue());
         }
 
         /// <summary>
