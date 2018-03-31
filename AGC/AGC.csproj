@@ -18,6 +18,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\AGC.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +38,7 @@
   <ItemGroup>
     <Compile Include="AgcCenter.cs" />
     <Compile Include="AgcGanerator.cs" />
+    <Compile Include="api\AgcButton.cs" />
     <Compile Include="api\AgcCheckbox.cs" />
     <Compile Include="api\AgcCheckBoxList.cs" />
     <Compile Include="api\AgcCheckText.cs" />
@@ -44,6 +46,10 @@
     <Compile Include="api\AgcLabelDate.cs" />
     <Compile Include="api\AgcLabelCombo.cs" />
     <Compile Include="api\AgcLabelText.cs" />
+    <Compile Include="api\AgcLabelTextarea.cs" />
+    <Compile Include="api\AgcRadioButton.cs" />
+    <Compile Include="api\AgcRadioList.cs" />
+    <Compile Include="api\AgcRadioText.cs" />
     <Compile Include="attributes\AgcBase.cs" />
     <Compile Include="attributes\AgcSetting.cs" />
     <Compile Include="entity\AgcControl.cs" />
@@ -52,15 +58,11 @@
     <Compile Include="interfaces\IAgcAttach.cs" />
     <Compile Include="interfaces\IValidate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="utils\GUIDUtil.cs" />
     <Compile Include="validate\ValidateBase.cs" />
     <Compile Include="validate\ValidateDecimal.cs" />
     <Compile Include="validate\ValidateInteger.cs" />
     <Compile Include="validate\ValidateRequire.cs" />
     <Compile Include="Validator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="enums\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

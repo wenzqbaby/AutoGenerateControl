@@ -15,8 +15,18 @@ namespace AGC.validate
         private Decimal min;
         private Decimal max;
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="failMsg">校验失败的信息</param>
         public ValidateDecimal(String failMsg) : base(failMsg) { }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="min">最小值(含)</param>
+        /// <param name="max">最大值(不含)</param>
+        /// <param name="failMsg">校验失败的信息</param>
         public ValidateDecimal(int min, int max, String failMsg)
             : base(failMsg)
         {
@@ -24,6 +34,13 @@ namespace AGC.validate
             this.max = max;
         }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="min">最小值(含)</param>
+        /// <param name="max">最大值(不含)</param>
+        /// <param name="failMsg">校验失败的信息</param>
+        /// <param name="addEvent">是否添加校验事件到控件上</param>
         public ValidateDecimal(int min, int max, String failMsg, bool addEvent)
             : base(failMsg, addEvent)
         {

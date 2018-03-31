@@ -16,14 +16,23 @@ namespace AGC.validate
     {
         public ValidateBase() { }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="failMsg">校验失败的信息</param>
         public ValidateBase(String failMsg)
         {
             this.FailMsg = failMsg;
         }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="failMsg">校验失败的信息</param>
+        /// <param name="addValidateEvent">是否添加校验事件到控件上</param>
         public ValidateBase(String failMsg, bool addValidateEvent)
+            : this(failMsg)
         {
-            this.FailMsg = failMsg;
             this.AddEvent = addValidateEvent;
         }
 

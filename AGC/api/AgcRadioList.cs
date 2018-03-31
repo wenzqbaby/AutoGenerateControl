@@ -9,18 +9,18 @@ using AGC.entity;
 namespace AGC.api
 {
     /// <summary>
-    /// Agc控件：Label、Panel、CheckBox的组合控件, 允许被附加
+    /// Agc控件：Label、Panel、RadioButton的组合控件, 允许被附加
     /// @author wenzq
-    /// @date   2018.3.25
+    /// @date   2018.3.31
     /// </summary>
-    public class AgcCheckBoxList:AgcBase, IAgcAttach
+    public class AgcRadioList: AgcBase, IAgcAttach
     {
         private AgcCenter<AgcCheckbox> mAgcCenter;
-        private List<AgcCheckbox> agcCheckBoxList = new List<AgcCheckbox>();
-        private Dictionary<String, AgcCheckbox> checkBoxDic = new Dictionary<String, AgcCheckbox>();
+        public List<AgcRadioButton> agcrbList = new List<AgcRadioButton>();
+        private Dictionary<String, AgcRadioButton> agcrbDic = new Dictionary<String, AgcRadioButton>();
         protected List<AgcBase> mAttachList = new List<AgcBase>();
         private int mPanelWidth = 0;
-        private String[] mCheckList;
+        private String[] mRbList;
         private Char mSeparate = '=';
         private Char mValueSeparate = '|';
 
@@ -29,37 +29,15 @@ namespace AGC.api
         /// </summary>
         /// <param name="index">排序</param>
         /// <param name="title">Label显示的内容</param>
-        /// <param name="panelWidth">包裹CheckBox的Panel的宽度</param>
+        /// <param name="panelWidth">包裹RadioButton的Panel的宽度</param>
         /// <param name="newRow">是否在新的一行创建</param>
-        /// <param name="checkList">Checkbox的值和显示内容，为键值对组合，用'='分开，如："key=value"</param>
-        public AgcCheckBoxList(int index, String title, int panelWidth, bool newRow, params String[] checkList)
-            : base(index, title, newRow)
+        /// <param name="rbList">RadioButton的值和显示内容，为键值对组合，用'='分开，如："key=value"</param>
+        public AgcRadioList(int index, String title, int panelWidth, bool newRow, params String[] rbList)
+            : base(index, title)
         {
-            this.mCheckList = checkList;
-            this.mPanelWidth = panelWidth;
-        }
-
-        public override object getValue()
-        {
-            String value = String.Empty;
-            foreach (AgcCheckbox acb in agcCheckBoxList)
-            {
-                value += String.IsNullOrEmpty(acb.getValue().ToString()) ? "" : acb.getValue() + "|";
-            }
-            return value.Length > 2? value.Substring(0, value.Length-1): value;
-        }
-
-        protected override void setValue(object obj)
-        {
-            String[] values = obj.ToString().Split(mValueSeparate);
-            foreach (String v in values)
-            {
-                AgcCheckbox acb = this.getCheckBoxByTag(v);
-                if (acb != null)
-                {
-                    acb.set(true);
-                }
-            }
+            mPanelWidth = panelWidth;
+            this.NewRow = newRow;
+            mRbList = rbList;
         }
 
         protected override void setControl()
@@ -91,18 +69,18 @@ namespace AGC.api
         public override bool afterAdd()
         {
             List<AgcBase> list = new List<AgcBase>();
-            for (int i = 0; i < mCheckList.Length; i++)
+            for (int i = 0; i < mRbList.Length; i++)
             {
-                String[] kv = mCheckList[i].Split(mSeparate);
+                String[] kv = mRbList[i].Split(mSeparate);
                 if (kv.Length != 2)
                 {
                     continue;
                 }
 
-                AgcCheckbox agcCb = new AgcCheckbox(i, kv[1].Trim(), kv[0].Trim());
+                AgcRadioButton agcCb = new AgcRadioButton(i, kv[1].Trim(), kv[0].Trim());
                 list.Add(agcCb);
-                agcCheckBoxList.Add(agcCb);
-                checkBoxDic[agcCb.Tag.ToString()]=agcCb;
+                agcrbList.Add(agcCb);
+                agcrbDic[agcCb.Tag.ToString()] = agcCb;
             }
             list.AddRange(mAttachList);
             AgcSetting setting = new AgcSetting(true);
@@ -112,11 +90,51 @@ namespace AGC.api
             return true;
         }
 
-        private AgcCheckbox getCheckBoxByTag(String tag)
+        public override object getValue()
+        {
+            foreach (AgcRadioButton r in agcrbList)
+            {
+                if (r.isChecked())
+                {
+                    return r.Tag.ToString();
+                }
+            }
+
+            return String.Empty;
+        }
+
+        protected override void setValue(object obj)
+        {
+            String[] values = obj.ToString().Split(mValueSeparate);
+            foreach (String v in values)
+            {
+                AgcRadioButton rb = getRadioButton(v);
+                if (rb != null)
+                {
+                    rb.set(true);
+                }
+            }
+        }
+
+        #region IAgcAttach 成员
+
+        public List<AgcBase> getAttachList()
+        {
+            return mAttachList;
+        }
+
+        public void attach(AgcBase agcBase)
+        {
+            mAttachList.Add(agcBase);
+        }
+
+        #endregion
+
+        public AgcRadioButton getRadioButton(String rbTag)
         {
             try
             {
-                return checkBoxDic[tag];
+                return agcrbDic[rbTag];
             }
             catch (Exception)
             {
@@ -139,20 +157,5 @@ namespace AGC.api
             get { return _mPanel; }
             set { _mPanel = value; }
         }
-
-
-        #region IAgcAttach 成员
-
-        List<AgcBase> IAgcAttach.getAttachList()
-        {
-            return mAttachList;
-        }
-
-        void IAgcAttach.attach(AgcBase agcBase)
-        {
-            mAttachList.Add(agcBase);
-        }
-
-        #endregion
     }
 }

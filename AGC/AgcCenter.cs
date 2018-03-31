@@ -31,15 +31,25 @@ namespace AGC
         private Control mContainer;
         private AgcGanerator mGanerator;
         private Type mType;
+        private bool isGenerate = false;
 
         private Validator<T> mValidator;
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="container">需要生成控件的容器</param>
         public AgcCenter(Control container)
         {
             this.init(container);
             this.generate();
         }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="container">需要生成控件的容器</param>
+        /// <param name="allowValidate">是否同时启用校验，将会将配置了校验的事件添加到控件上</param>
         public AgcCenter(Control container, bool allowValidate)
         {
             this.init(container);
@@ -51,12 +61,23 @@ namespace AGC
             this.generate();
         }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="container">需要生成控件的容器</param>
+        /// <param name="slots">需要额外添加的控件集合</param>
         public AgcCenter(Control container, List<AgcBase> slots)
         {
             this.init(container);
             this.generate(slots);
         }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="container">需要生成控件的容器</param>
+        /// <param name="slots">需要额外添加的控件集合</param>
+        /// <param name="allowValidate">是否同时启用校验，将会将配置了校验的事件添加到控件上</param>
         public AgcCenter(Control container, List<AgcBase> slots, bool allowValidate)
         {
             this.init(container);
@@ -90,7 +111,7 @@ namespace AGC
                         {
                             baseList.Add(ab);
                         }
-                        propDic.Add(pi.Name, ab);
+                        propDic[pi.Name] = ab;
                     }
                 }
                 catch (System.Exception ex)
@@ -119,6 +140,12 @@ namespace AGC
             
         }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="container">需要生成控件的容器</param>
+        /// <param name="agcSetting">生成配置</param>
+        /// <param name="slots">需要额外添加的控件集合</param>
         public AgcCenter(Control container, AgcSetting agcSetting, List<AgcBase> slots)
         {
             mContainer = container;
@@ -131,6 +158,10 @@ namespace AGC
             this.generate();
         }
 
+        /// <summary>
+        /// 获取控件上的值到对象
+        /// </summary>
+        /// <returns></returns>
         public T getValue()
         {
             T t = Activator.CreateInstance<T>();
@@ -141,6 +172,10 @@ namespace AGC
             return t;
         }
 
+        /// <summary>
+        /// 获取值，对象属性为null或者空字符串的值设置为字符串"NULL"
+        /// </summary>
+        /// <returns></returns>
         public T getValueBySetNull()
         {
             T t = Activator.CreateInstance<T>();
@@ -156,6 +191,10 @@ namespace AGC
             return t;
         }
 
+        /// <summary>
+        /// 将对象设置到控件上显示
+        /// </summary>
+        /// <param name="t"></param>
         public void setValue(T t)
         {
             foreach (KeyValuePair<String, AgcBase> kv in propDic)
@@ -165,6 +204,10 @@ namespace AGC
             }
         }
 
+        /// <summary>
+        /// 校验控件输入的值
+        /// </summary>
+        /// <returns></returns>
         public Validatation validate()
         {
             if (mValidator == null)
@@ -180,7 +223,12 @@ namespace AGC
         /// </summary>
         public void generate()
         {
+            if (isGenerate)
+            {
+                return;
+            }
             mGanerator.generate(baseList);
+            isGenerate = true;
         }
 
         /// <summary>

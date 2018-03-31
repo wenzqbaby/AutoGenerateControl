@@ -18,9 +18,9 @@ namespace AGC.api
             set { _mCheckBox = value; }
         }
 
-        public AgcCheckbox(int index, String title, String value):base(index)
+        public AgcCheckbox(int index, String title, String value)
+            : base(index, title)
         {
-            this.Title = title;
             this.Tag = value;
         }
 

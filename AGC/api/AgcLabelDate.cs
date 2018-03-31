@@ -8,24 +8,65 @@ using AGC.entity;
 
 namespace AGC.api
 {
+    /// <summary>
+    /// Agc控件：Label、DateTimePicker的组合控件, 取值和设置的日期格式为字符串"yyyy-MM-dd HH:mm:ss", 允许被附加
+    /// @author wenzq
+    /// @date   2018.3.25
+    /// </summary>
     public class AgcLabelDate: AgcBase, IAgcAttach
     {
-        public AgcLabelDate(int index, String label, bool newRow):base(index)
+        private int mDateWidth = 130;
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        public AgcLabelDate(int index, String title, bool newRow)
+            : base(index, title, newRow) { }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="dateTimePickerWidth">DateTimePicker的宽度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        public AgcLabelDate(int index, String title, int dateTimePickerWidth, bool newRow)
+            : this(index, title, newRow)
         {
-            this.Title = label;
-            this.NewRow = NewRow;
+            this.mDateWidth = dateTimePickerWidth;
         }
 
-        public AgcLabelDate(int index, bool attach, String prop, String label, bool newRow)
-            : base(index)
+        /// <summary>
+        /// 构造方法，用于附加到其他控件
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="prop">要附加到的属性名，该属性对应的控件必须实现AGC.interfaces.IAgcAttach接口</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        public AgcLabelDate(int index, String prop, String title, bool newRow)
+            : base(index, title, newRow)
         {
-            this.Index = index;
-            this.isAttach = attach;
+            this.isAttach = true;
             this.attachProp = prop;
-            this.Title = label;
-            this.NewRow = newRow;
 
             this.addControl(2, 3);
+        }
+
+        /// <summary>
+        /// 构造方法，用于附加到其他控件
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="prop">要附加到的属性名，该属性对应的控件必须实现AGC.interfaces.IAgcAttach接口</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="dateTimePickerWidth">DateTimePicker的宽度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        public AgcLabelDate(int index, String prop, String title, int dateTimePickerWidth, bool newRow)
+            : this(index, prop, title, newRow)
+        {
+            this.mDateWidth = dateTimePickerWidth;
         }
 
         private DateTimePicker _mDateTimePicker;
@@ -89,7 +130,7 @@ namespace AGC.api
             agcDtp.MarginTop = -4;
             agcDtp.MarginRight = 2;
             this.MDateTimePicker = new DateTimePicker();
-            this.MDateTimePicker.Size = new System.Drawing.Size(200, 21);
+            this.MDateTimePicker.Size = new System.Drawing.Size(mDateWidth, 21);
             this.MDateTimePicker.Name = this.generateName();
             this.MDateTimePicker.TabIndex = this.Index;
             agcDtp.MControl = this.MDateTimePicker;

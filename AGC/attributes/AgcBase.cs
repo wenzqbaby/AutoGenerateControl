@@ -8,13 +8,16 @@ using AGC.entity;
 namespace AGC.attributes
 {
     /// <summary>
-    /// 特征的基类：必须在init方法中初始化mIAgc接口
+    /// Agc的基类
     /// @author wenzq
     /// @date   2018.3.23
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, Inherited = true)]
     public abstract class AgcBase : Attribute
     {
+        /// <summary>
+        /// 当前类名
+        /// </summary>
         protected String mTAG;
         /// <summary>
         /// 若该属性为true，则生成的控件会添加到其他容器上
@@ -26,10 +29,37 @@ namespace AGC.attributes
         /// </summary>
         public String attachProp;
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
         public AgcBase(int index)
         {
             this.Index = index;
             mTAG = this.GetType().Name;
+        }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">显示标题</param>
+        public AgcBase(int index, String title)
+            : this(index)
+        {
+            this.Title = title;
+        }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="titel">显示标题</param>
+        /// <param name="newRow">是否在新的一行生成</param>
+        public AgcBase(int index, String titel, bool newRow)
+            : this(index, titel)
+        {
+            this.NewRow = newRow;
         }
 
         #region 生命周期
@@ -37,12 +67,23 @@ namespace AGC.attributes
         /// 初始化
         /// </summary>
         public virtual void init() { }
+        /// <summary>
+        /// 设置控件前执行
+        /// </summary>
         protected virtual void beforeSetControl() { }
+        /// <summary>
+        /// 设置控件
+        /// </summary>
         protected abstract void setControl();
+        /// <summary>
+        /// 设置控件后执行
+        /// </summary>
         protected virtual void afterSetControl() { }
 
-        public virtual void beforeGenerate() { }
-
+        /// <summary>
+        /// 在容器中添加生成控件
+        /// </summary>
+        /// <returns></returns>
         public List<AgcControl> generate()
         {
             this.beforeSetControl();
@@ -50,12 +91,24 @@ namespace AGC.attributes
             this.afterSetControl();
             MAgcCtlList.Sort(delegate(AgcControl ac1, AgcControl ac2) { return ac1.Index.CompareTo(ac2.Index); });
             calcWidthAndHeight();
+            this.afterGenerate();
             return MAgcCtlList;
         }
 
-        public virtual void afterGenerate() { }
+        /// <summary>
+        /// 生成控件后执行
+        /// </summary>
+        protected virtual void afterGenerate() { }
+
+        /// <summary>
+        /// 添加控件到容器后执行，返回true则重新计算该控件的长和宽
+        /// </summary>
+        /// <returns></returns>
         public virtual bool afterAdd() { return false; }
 
+        /// <summary>
+        /// 控件生成结束
+        /// </summary>
         public void theEnd() 
         {
             if (this.afterAdd())
@@ -104,6 +157,10 @@ namespace AGC.attributes
         /// <param name="obj"></param>
         protected abstract void setValue(Object obj);
 
+        /// <summary>
+        /// 控件是否可用，需重写实现
+        /// </summary>
+        /// <param name="enable">是则可用</param>
         public virtual void Enable(bool enable) {}
 
         private List<AgcControl> _mAgcCtlList = new List<AgcControl>();
@@ -243,6 +300,10 @@ namespace AGC.attributes
             set { _tag = value; }
         }
 
+        /// <summary>
+        /// 自动生成控件名称
+        /// </summary>
+        /// <returns></returns>
         protected String generateName()
         {
             return Guid.NewGuid().ToString("N").ToUpper();

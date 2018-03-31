@@ -51,9 +51,7 @@ namespace AGC
             foreach (AgcBase agcBase in agcBaseList)
             {
                 agcBase.init();
-                agcBase.beforeGenerate();
                 agcBase.generate();
-                agcBase.afterGenerate();
 
                 if (X != mSetting.MarginLeft && (agcBase.NewRow || 
                     (X + agcBase.MarginLeft + agcBase.TotalWidth + agcBase.MarginRight + mSetting.MarginRight) > mContainer.Width))

@@ -13,22 +13,23 @@ namespace AGC.attributes
     public class AgcSetting: Attribute
     {
         public AgcSetting() { }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="resetHeight">生成控件后，是否重设容器高度</param>
         public AgcSetting(bool resetHeight)
         {
             this.ResetHeight = resetHeight;
         }
 
-        public AgcSetting(int columns)
-        {
-            this.Column = columns;
-        }
-
-        public AgcSetting(int columns, bool resetHeight)
-        {
-            this.Column = columns;
-            this.ResetHeight = resetHeight;
-        }
-
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="top"></param>
+        /// <param name="buttom"></param>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
         public AgcSetting(int top, int buttom, int left, int right)
         {
             this.MarginTop = top;
@@ -37,9 +38,16 @@ namespace AGC.attributes
             this.MarginRight = right;
         }
 
-        public AgcSetting(int columns, bool resetHeight, int top, int buttom, int left, int right)
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="resetHeight">生成控件后，是否重设容器高度</param>
+        /// <param name="top">上边距</param>
+        /// <param name="buttom">下边距</param>
+        /// <param name="left">左边距</param>
+        /// <param name="right">右边距</param>
+        public AgcSetting(bool resetHeight, int top, int buttom, int left, int right)
         {
-            this.Column = columns;
             this.ResetHeight = resetHeight;
             this.MarginTop = top;
             this.MarginButtom = buttom;
@@ -82,15 +90,6 @@ namespace AGC.attributes
         {
             get { return _marginRight; }
             set { _marginRight = value; }
-        }
-        private int _column = 0;
-        /// <summary>
-        /// 每行控件最大数
-        /// </summary>
-        public int Column
-        {
-            get { return _column; }
-            set { _column = value; }
         }
 
         private int _spacingX = 8;

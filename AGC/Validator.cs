@@ -23,6 +23,9 @@ namespace AGC
         private List<String> addEventList = new List<string>();
         private bool isInit;
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
         public Validator()
         {
             mType = typeof(T);
@@ -50,6 +53,10 @@ namespace AGC
             }
         }
 
+        /// <summary>
+        /// 初始化，对需附加校验方法的控件集合添加校验事件
+        /// </summary>
+        /// <param name="dic"></param>
         public void init(Dictionary<String, AgcBase> dic)
         {
             if (isInit)
@@ -76,6 +83,11 @@ namespace AGC
             }
         }
 
+        /// <summary>
+        /// 校验对象
+        /// </summary>
+        /// <param name="t">需要校验的对象</param>
+        /// <returns></returns>
         public Validatation validate(T t)
         {
             Validatation v = new Validatation();

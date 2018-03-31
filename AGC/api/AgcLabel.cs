@@ -9,13 +9,24 @@ using System.Drawing;
 
 namespace AGC.api
 {
+    /// <summary>
+    /// Agc控件：Label和Label的组合控件
+    /// @author wenzq
+    /// @date   2018.3.24
+    /// </summary>
     public class AgcLabel: AgcBase
     {
-        public AgcLabel(int index, String label, int valueWidth, bool newRow):base(index)
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="valueWidth">显示值的Label的宽度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        public AgcLabel(int index, String title, int valueWidth, bool newRow)
+            : base(index, title, newRow)
         {
-            this.Title = label;
             this.MarginRight = valueWidth;
-            this.NewRow = newRow;
         }
 
         public override object getValue()
