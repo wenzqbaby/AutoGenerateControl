@@ -23,6 +23,7 @@ namespace AGC.api
         private String[] mRbList;
         private Char mSeparate = '=';
         private Char mValueSeparate = '|';
+        private bool mFontBold = true;
 
         /// <summary>
         /// 构造方法
@@ -40,6 +41,20 @@ namespace AGC.api
             mRbList = rbList;
         }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="panelWidth">包裹RadioButton的Panel的宽度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        /// <param name="rbList">RadioButton的值和显示内容，为键值对组合，用'='分开，如："key=value"</param>
+        public AgcRadioList(int index, String title, int panelWidth, bool newRow, bool labelBold, params String[] rbList)
+            : this(index, title, panelWidth, newRow, rbList)
+        {
+            this.mFontBold = labelBold;
+        }
+
         protected override void setControl()
         {
             AgcControl agcLabel = new AgcControl();
@@ -49,6 +64,10 @@ namespace AGC.api
             this.MLabel.Name = this.generateName();
             this.MLabel.Text = Title;
             this.MLabel.Width = this.MLabel.PreferredWidth;
+            if (mFontBold)
+            {
+                this.MLabel.Font = new System.Drawing.Font(this.MLabel.Font, System.Drawing.FontStyle.Bold);
+            }
             agcLabel.MControl = this.MLabel;
 
             AgcControl agcPanel = new AgcControl();

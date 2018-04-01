@@ -18,15 +18,36 @@ namespace AGC.api
         private int mBtnHeight = 0;
         private EventHandler mEventHandler;
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Button显示的内容</param>
+        /// <param name="newRow">是否在新的一行创建</param>
         public AgcButton(int index, String title, bool newRow)
             : base(index, title, newRow) { }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="e">按钮点击事件</param>
+        /// <param name="newRow">是否在新的一行创建</param>
         public AgcButton(int index, String title, EventHandler e, bool newRow)
             : base(index, title, newRow) 
         {
             mEventHandler = e;
         }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Button显示的内容</param>
+        /// <param name="width">Button的宽度</param>
+        /// <param name="height">Button的高度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
         public AgcButton(int index, String title, int width, int height,  bool newRow)
             : base(index, title, newRow)
         {
@@ -34,6 +55,15 @@ namespace AGC.api
             mBtnHeight = height;
         }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Button显示的内容</param>
+        /// <param name="width">Button的宽度</param>
+        /// <param name="height">Button的高度</param>
+        /// <param name="e">按钮点击事件</param>
+        /// <param name="newRow">是否在新的一行创建</param>
         public AgcButton(int index, String title, int width, int height, EventHandler e, bool newRow)
             : this(index, title, width, height, newRow)
         {

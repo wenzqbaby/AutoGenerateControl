@@ -23,7 +23,7 @@ namespace AGC.api
         private String[] mCheckList;
         private Char mSeparate = '=';
         private Char mValueSeparate = '|';
-
+        private bool mFontBold = true;
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -37,6 +37,21 @@ namespace AGC.api
         {
             this.mCheckList = checkList;
             this.mPanelWidth = panelWidth;
+        }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="panelWidth">包裹CheckBox的Panel的宽度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        /// <param name="labelBold">Label字体是否加粗</param>
+        /// <param name="checkList">Checkbox的值和显示内容，为键值对组合，用'='分开，如："key=value"</param>
+        public AgcCheckBoxList(int index, String title, int panelWidth, bool newRow, bool labelBold, params String[] checkList)
+            : this(index, title, panelWidth, newRow, checkList)
+        {
+            this.mFontBold = labelBold;
         }
 
         public override object getValue()
@@ -71,6 +86,10 @@ namespace AGC.api
             this.MLabel.Name = this.generateName();
             this.MLabel.Text = Title;
             this.MLabel.Width = this.MLabel.PreferredWidth;
+            if (mFontBold)
+            {
+                this.MLabel.Font = new System.Drawing.Font(this.MLabel.Font, System.Drawing.FontStyle.Bold);
+            }
             agcLabel.MControl = this.MLabel;
 
             AgcControl agcPanel = new AgcControl();

@@ -16,6 +16,7 @@ namespace AGC.api
     /// </summary>
     public class AgcLabel: AgcBase
     {
+        private bool mFontBold = true;
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -27,6 +28,20 @@ namespace AGC.api
             : base(index, title, newRow)
         {
             this.MarginRight = valueWidth;
+        }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="valueWidth">显示值的Label的宽度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        /// <param name="labelBold">Label字体是否加粗</param>
+        public AgcLabel(int index, String title, int valueWidth, bool newRow, bool labelBold)
+            : this(index, title, valueWidth, newRow)
+        {
+            this.mFontBold = labelBold;
         }
 
         public override object getValue()
@@ -53,6 +68,10 @@ namespace AGC.api
             this.MLabelTitle.Name = this.generateName();
             this.MLabelTitle.Text = this.Title;
             this.MLabelTitle.Width = this.MLabelTitle.PreferredWidth;
+            if (mFontBold)
+            {
+                this.MLabelTitle.Font = new Font(this.MLabelTitle.Font, FontStyle.Bold);
+            }
             agcLabelTitle.MControl = this.MLabelTitle;
 
             AgcControl agcLabelValue = new AgcControl();

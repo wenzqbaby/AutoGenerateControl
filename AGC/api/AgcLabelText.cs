@@ -15,6 +15,7 @@ namespace AGC.api
     /// </summary>
     public class AgcLabelText : AgcBase, IValidate
     {
+        private bool mFontBold = true;
         private int textWidth;
         private int mMaxLength = 32767;
 
@@ -57,7 +58,25 @@ namespace AGC.api
         public AgcLabelText(int index, String title, int textWidth, int maxLenth, bool newRow)
             : this(index, title, textWidth, newRow)
         {
-            this.mMaxLength = maxLenth;
+            if (maxLenth > 0)
+            {
+                this.mMaxLength = maxLenth;
+            }
+        }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="textWidth">TextBox的长度</param>
+        /// <param name="maxLenth">TextBox可输入的字符最大长度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        /// <param name="labelBold">Label字体是否加粗</param>
+        public AgcLabelText(int index, String title, int textWidth, int maxLenth, bool newRow, bool labelBold)
+            : this(index, title, textWidth, maxLenth, newRow)
+        {
+            this.mFontBold = labelBold;
         }
 
         public override object getValue()
@@ -79,6 +98,10 @@ namespace AGC.api
             this.MLabel.Name = this.generateName();
             this.MLabel.Text = Title;
             this.MLabel.Width = this.MLabel.PreferredWidth;
+            if (mFontBold)
+            {
+                this.MLabel.Font = new System.Drawing.Font(this.MLabel.Font, System.Drawing.FontStyle.Bold);
+            }
             agcLabel.MControl = this.MLabel;
 
             AgcControl agcText = new AgcControl();

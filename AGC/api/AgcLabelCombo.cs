@@ -16,6 +16,7 @@ namespace AGC.api
     {
         private String[] mOptions;
         private int mCbLength;
+        private bool mFontBold = true;
 
         /// <summary>
         /// 构造方法
@@ -46,6 +47,21 @@ namespace AGC.api
             mOptions = options;
         }
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="cbLength">ComboBox的宽度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        /// <param name="labelBold">Label字体是否加粗</param>
+        /// <param name="options">ComboBox的选项为键值对组合，用'='分开，如："key=value"</param>
+        public AgcLabelCombo(int index, String title, int cbLength, bool newRow, bool labelBold, params String[] options)
+            : this(index, title, cbLength, newRow, options)
+        {
+            this.mFontBold = labelBold;
+        }
+
         protected override void setControl()
         {
             AgcControl agcLabel = new AgcControl();
@@ -55,6 +71,10 @@ namespace AGC.api
             this.MLabel.Name = this.generateName();
             this.MLabel.Text = this.Title;
             this.MLabel.Width = this.MLabel.PreferredWidth;
+            if (mFontBold)
+            {
+                this.MLabel.Font = new System.Drawing.Font(this.MLabel.Font, System.Drawing.FontStyle.Bold);
+            }
             agcLabel.MControl = this.MLabel;
 
             AgcControl agcComboBox = new AgcControl();

@@ -16,6 +16,7 @@ namespace AGC.api
     public class AgcLabelDate: AgcBase, IAgcAttach
     {
         private int mDateWidth = 130;
+        private bool mFontBold = true;
 
         /// <summary>
         /// 构造方法
@@ -37,6 +38,20 @@ namespace AGC.api
             : this(index, title, newRow)
         {
             this.mDateWidth = dateTimePickerWidth;
+        }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="dateTimePickerWidth">DateTimePicker的宽度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        /// <param name="labelBold">Label字体是否加粗</param>
+        public AgcLabelDate(int index, String title, int dateTimePickerWidth, bool newRow, bool labelBold)
+            : this(index, title, dateTimePickerWidth, newRow)
+        {
+            this.mFontBold = labelBold;
         }
 
         /// <summary>
@@ -67,6 +82,32 @@ namespace AGC.api
             : this(index, prop, title, newRow)
         {
             this.mDateWidth = dateTimePickerWidth;
+        }
+
+        /// <summary>
+        /// 构造方法，用于附加到其他控件
+        /// </summary>
+        /// <param name="index">排序</param>
+        /// <param name="prop">要附加到的属性名，该属性对应的控件必须实现AGC.interfaces.IAgcAttach接口</param>
+        /// <param name="title">Label显示的内容</param>
+        /// <param name="dateTimePickerWidth">DateTimePicker的宽度</param>
+        /// <param name="newRow">是否在新的一行创建</param>
+        /// <param name="labelBold">Label字体是否加粗</param>
+        public AgcLabelDate(int index, String prop, String title, int dateTimePickerWidth, bool newRow, bool labelBold)
+            : this(index, prop, title, dateTimePickerWidth, newRow)
+        {
+            this.mFontBold = labelBold;
+            if (this.MLabel != null)
+            {
+                if (this.mFontBold)
+                {
+                    this.MLabel.Font = new System.Drawing.Font(this.MLabel.Font, System.Drawing.FontStyle.Bold);
+                }
+                else
+                {
+                    this.MLabel.Font = new System.Drawing.Font(this.MLabel.Font, System.Drawing.FontStyle.Regular);
+                }
+            }
         }
 
         private DateTimePicker _mDateTimePicker;
@@ -122,6 +163,10 @@ namespace AGC.api
             this.MLabel.Name = this.generateName();
             this.MLabel.Text = this.Title;
             this.MLabel.Width = this.MLabel.PreferredWidth;
+            if (mFontBold)
+            {
+                this.MLabel.Font = new System.Drawing.Font(this.MLabel.Font, System.Drawing.FontStyle.Bold);
+            }
             agcLabel.MControl = this.MLabel;
 
             AgcControl agcDtp = new AgcControl();
@@ -133,6 +178,7 @@ namespace AGC.api
             this.MDateTimePicker.Size = new System.Drawing.Size(mDateWidth, 21);
             this.MDateTimePicker.Name = this.generateName();
             this.MDateTimePicker.TabIndex = this.Index;
+            this.MDateTimePicker.Value = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00");
             agcDtp.MControl = this.MDateTimePicker;
 
             this.MAgcCtlList.Add(agcLabel);
