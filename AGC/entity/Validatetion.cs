@@ -9,7 +9,7 @@ namespace AGC.entity
     /// @author wenzq
     /// @date   2018.3.28
     /// </summary>
-    public class Validatation
+    public class Validatetion
     {
         private bool _isValide = true;
         /// <summary>
@@ -29,6 +29,16 @@ namespace AGC.entity
         {
             get { return failMsgs; }
             set { failMsgs = value; }
+        }
+
+        public override string ToString()
+        {
+            String str = String.Empty;
+            foreach (String msg in failMsgs)
+            {
+                str += msg + "\n";
+            }
+            return str;
         }
     }
 }

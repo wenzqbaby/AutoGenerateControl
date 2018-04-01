@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{98F8D3E0-2505-4931-8B1E-3D0BCA87E804}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{41E53B78-D3AD-4EE3-8029-B9507394C111}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AGC</RootNamespace>
-    <AssemblyName>AGC</AssemblyName>
+    <RootNamespace>AGCTest</RootNamespace>
+    <AssemblyName>AGCTest</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -18,7 +18,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\AGC.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,41 +28,49 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AGC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AGC\bin\Debug\AGC.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgcCenter.cs" />
-    <Compile Include="AgcGanerator.cs" />
-    <Compile Include="api\AgcButton.cs" />
-    <Compile Include="api\AgcCheckbox.cs" />
-    <Compile Include="api\AgcCheckBoxList.cs" />
-    <Compile Include="api\AgcCheckText.cs" />
-    <Compile Include="api\AgcLabel.cs" />
-    <Compile Include="api\AgcLabelDate.cs" />
-    <Compile Include="api\AgcLabelCombo.cs" />
-    <Compile Include="api\AgcLabelText.cs" />
-    <Compile Include="api\AgcLabelTextarea.cs" />
-    <Compile Include="api\AgcLabelTextLabel.cs" />
-    <Compile Include="api\AgcRadioButton.cs" />
-    <Compile Include="api\AgcRadioList.cs" />
-    <Compile Include="api\AgcRadioText.cs" />
-    <Compile Include="attributes\AgcBase.cs" />
-    <Compile Include="attributes\AgcSetting.cs" />
-    <Compile Include="entity\AgcControl.cs" />
-    <Compile Include="entity\AgcKeyValue.cs" />
-    <Compile Include="entity\Validatetion.cs" />
-    <Compile Include="interfaces\IAgcAttach.cs" />
-    <Compile Include="interfaces\IValidate.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="validate\ValidateBase.cs" />
-    <Compile Include="validate\ValidateDecimal.cs" />
-    <Compile Include="validate\ValidateInteger.cs" />
-    <Compile Include="validate\ValidateRequire.cs" />
-    <Compile Include="Validator.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

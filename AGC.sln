@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGC", "AGC\AGC.csproj", "{98F8D3E0-2505-4931-8B1E-3D0BCA87E804}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGCTest", "AGCTest\AGCTest.csproj", "{41E53B78-D3AD-4EE3-8029-B9507394C111}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{98F8D3E0-2505-4931-8B1E-3D0BCA87E804}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98F8D3E0-2505-4931-8B1E-3D0BCA87E804}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98F8D3E0-2505-4931-8B1E-3D0BCA87E804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41E53B78-D3AD-4EE3-8029-B9507394C111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41E53B78-D3AD-4EE3-8029-B9507394C111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41E53B78-D3AD-4EE3-8029-B9507394C111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41E53B78-D3AD-4EE3-8029-B9507394C111}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

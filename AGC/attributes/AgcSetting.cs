@@ -26,16 +26,46 @@ namespace AGC.attributes
         /// <summary>
         /// 构造方法
         /// </summary>
-        /// <param name="top"></param>
-        /// <param name="buttom"></param>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
+        /// <param name="spaceX">列间距</param>
+        /// <param name="spaceY">行间距</param>
+        public AgcSetting(int spaceX, int spaceY)
+        {
+            this.SpacingX = spaceX;
+            this.SpacingY = spaceY;
+        }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="top">上边距</param>
+        /// <param name="buttom">下边距</param>
+        /// <param name="left">左边距</param>
+        /// <param name="right">右边距</param>
         public AgcSetting(int top, int buttom, int left, int right)
         {
             this.MarginTop = top;
             this.MarginButtom = buttom;
             this.MarginLeft = left;
             this.MarginRight = right;
+        }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="top">上边距</param>
+        /// <param name="buttom">下边距</param>
+        /// <param name="left">左边距</param>
+        /// <param name="right">右边距</param>
+        /// <param name="spaceX">列间距</param>
+        /// <param name="spaceY">行间距</param>
+        public AgcSetting(int top, int buttom, int left, int right, int spaceX, int spaceY)
+        {
+            this.MarginTop = top;
+            this.MarginButtom = buttom;
+            this.MarginLeft = left;
+            this.MarginRight = right;
+            this.SpacingX = spaceX;
+            this.SpacingY = spaceY;
         }
 
         /// <summary>
@@ -53,6 +83,27 @@ namespace AGC.attributes
             this.MarginButtom = buttom;
             this.MarginLeft = left;
             this.MarginRight = right;
+        }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="resetHeight">生成控件后，是否重设容器高度</param>
+        /// <param name="top">上边距</param>
+        /// <param name="buttom">下边距</param>
+        /// <param name="left">左边距</param>
+        /// <param name="right">右边距</param>
+        /// <param name="spaceX">列间距</param>
+        /// <param name="spaceY">行间距</param>
+        public AgcSetting(bool resetHeight, int top, int buttom, int left, int right, int spaceX, int spaceY)
+        {
+            this.ResetHeight = resetHeight;
+            this.MarginTop = top;
+            this.MarginButtom = buttom;
+            this.MarginLeft = left;
+            this.MarginRight = right;
+            this.SpacingX = spaceX;
+            this.SpacingY = spaceY;
         }
 
         private int _marginTop = 10;

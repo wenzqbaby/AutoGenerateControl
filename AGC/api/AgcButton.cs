@@ -86,6 +86,7 @@ namespace AGC.api
             this.MButton.Name = this.generateName();
             this.MButton.Text = this.Title;
             this.MButton.UseVisualStyleBackColor = true;
+            this.MButton.Width = this.MButton.PreferredSize.Width;
             if (mEventHandler !=null)
             {
                 this.MButton.Click += mEventHandler;

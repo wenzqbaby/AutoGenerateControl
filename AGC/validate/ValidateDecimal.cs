@@ -48,13 +48,23 @@ namespace AGC.validate
             this.max = max;
         }
 
-        public override bool validate(object value)
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="min">最小值(含)</param>
+        /// <param name="max">最大值(不含)</param>
+        /// <param name="failMsg">校验失败的信息</param>
+        /// <param name="addEvent">是否添加校验事件到控件上</param>
+        /// <param name="allowNull">是否允许空值或空字符串</param>
+        public ValidateDecimal(int min, int max, String failMsg, bool addEvent, bool allowNull)
+            : base(failMsg, addEvent, allowNull)
         {
-            if (value == null)
-            {
-                return false;
-            }
+            this.min = min;
+            this.max = max;
+        }
 
+        protected override bool validate(object value)
+        {
             try
             {
                 Decimal d = Convert.ToDecimal(value);

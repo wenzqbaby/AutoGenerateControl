@@ -88,12 +88,12 @@ namespace AGC
         /// </summary>
         /// <param name="t">需要校验的对象</param>
         /// <returns></returns>
-        public Validatation validate(T t)
+        public Validatetion validate(T t)
         {
-            Validatation v = new Validatation();
+            Validatetion v = new Validatetion();
             foreach (KeyValuePair<String,ValidateBase> item in mPropDic)
             {
-                if (!item.Value.validate(getObj(t,item.Key)))
+                if (!item.Value.vaildated(getObj(t, item.Key)))
                 {
                     if (v.IsValide)
                     {

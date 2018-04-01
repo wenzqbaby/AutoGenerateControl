@@ -32,6 +32,7 @@ namespace AGC
         private AgcGanerator mGanerator;
         private Type mType;
         private bool isGenerate = false;
+        private AgcSetting mAgcSetting;
 
         private Validator<T> mValidator;
 
@@ -53,12 +54,12 @@ namespace AGC
         public AgcCenter(Control container, bool allowValidate)
         {
             this.init(container);
+            this.generate();
             if (allowValidate)
             {
                 mValidator = new Validator<T>();
                 mValidator.init(this.propDic);
             }
-            this.generate();
         }
 
         /// <summary>
@@ -81,12 +82,12 @@ namespace AGC
         public AgcCenter(Control container, List<AgcBase> slots, bool allowValidate)
         {
             this.init(container);
+            this.generate(slots);
             if (allowValidate)
             {
                 mValidator = new Validator<T>();
                 mValidator.init(this.propDic);
             }
-            this.generate(slots);
         }
 
         private void init(Control container)
@@ -95,6 +96,16 @@ namespace AGC
             TAG = mType.Name;
             PropertyInfo[] mPropertyInfo = typeof(T).GetProperties();
             List<AgcBase> attachList = new List<AgcBase>();
+
+            try
+            {
+                mAgcSetting = (Attribute.GetCustomAttribute(mType, typeof(AgcSetting)) as AgcSetting);
+            }
+            catch (Exception)
+            {
+                mAgcSetting = new AgcSetting();
+            }
+
             foreach (PropertyInfo pi in mPropertyInfo)
             {
                 try
@@ -136,7 +147,7 @@ namespace AGC
             }
 
             mContainer = container;
-            mGanerator = new AgcGanerator(mContainer);
+            mGanerator = new AgcGanerator(mContainer, mAgcSetting);
             
         }
 
@@ -208,7 +219,7 @@ namespace AGC
         /// 校验控件输入的值
         /// </summary>
         /// <returns></returns>
-        public Validatation validate()
+        public Validatetion validate()
         {
             if (mValidator == null)
             {

@@ -15,14 +15,13 @@ namespace AGC.validate
         /// 构造方法
         /// </summary>
         /// <param name="failMsg">校验失败的信息</param>
-        public ValidateRequire(String failMsg) : base(failMsg) { }
-
-        public override bool validate(object value)
+        public ValidateRequire(String failMsg) : base(failMsg) 
         {
-            if (value == null || String.IsNullOrEmpty(value.ToString()))
-            {
-                return false;
-            }
+            this.AllowNull = false;
+        }
+
+        protected override bool validate(object value)
+        {
             return true;
         }
     }
