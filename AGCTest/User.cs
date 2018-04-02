@@ -27,7 +27,7 @@ namespace AGCTest
         }
 
         private String _phone;
-        [ValidateInteger(0,0,"电话输入有误",true)]
+        [ValidateNumber("电话输入有误")] 
         [AgcLabelText(30, "电话：", 150, 11, false)]
         public String Phone
         {

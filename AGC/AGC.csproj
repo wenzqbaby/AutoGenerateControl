@@ -62,6 +62,7 @@
     <Compile Include="validate\ValidateBase.cs" />
     <Compile Include="validate\ValidateDecimal.cs" />
     <Compile Include="validate\ValidateInteger.cs" />
+    <Compile Include="validate\ValidateNumber.cs" />
     <Compile Include="validate\ValidateRequire.cs" />
     <Compile Include="Validator.cs" />
   </ItemGroup>
